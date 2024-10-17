@@ -1,13 +1,12 @@
-from celery.task import task
+from subprocess import check_call()
+from celery import Celery
+import celeryconfig
 
-from subprocess import check_call
-
-#Default base directory 
-#basedir="/data/static/"
-
+app = Celery()
+app.config_from_object(celeryconfig)
 
 #Example task
-@task()
+@app.task()
 def add(x, y):
     """ Example task that adds two numbers or strings
         args: x and y
@@ -16,7 +15,8 @@ def add(x, y):
     result = x + y
     return result
 
-@task()
+
+@app.task()
 def wget(domain):
     result = check_call(['wget', '--mirror', domain])
     return result
