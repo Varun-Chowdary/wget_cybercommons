@@ -18,6 +18,9 @@ def add(x, y):
 
 @app.task()
 def wget(domain):
+    """ Mirror a sites content
+        args: domain
+    """
     result = check_call(['wget', '--mirror', domain])
     return result
 
